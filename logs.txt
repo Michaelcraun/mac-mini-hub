@@ -1,0 +1,56 @@
+
+Starting new monitor on 2021-11-06
+WARN: Temp is too high [111.840255647]
+Temperature has dropped to a nominal range [85.7121427791]
+WARN: Temp is too high [108.426493913]
+WARN: Temperature is 103.627455791
+Temperature has dropped to a nominal range [92.5712302766]
+WARN: Temp is too high [112.491603771]
+WARN: Temperature is 106.425288259
+WARN: Temperature is 95.2723165433
+Temperature has dropped to a nominal range [90.0656760356]
+WARN: Temp is too high [102.122916876]
+WARN: Temperature is 100.934469985
+WARN: Temperature is 110.165380136
+WARN: Temperature is 116.468101133
+WARN: Temperature is 116.340282112
+Temperature has dropped to a nominal range [88.1399810539]
+WARN: Temp is too high [113.308551092]
+WARN: Temperature is 108.638540829
+Temperature has dropped to a nominal range [83.8265086483]
+WARN: Temp is too high [116.591190439]
+Temperature has dropped to a nominal range [80.2467110998]
+WARN: Temp is too high [115.560496799]
+WARN: Temperature is 97.0846433954
+WARN: Temperature is 113.611701214
+WARN: Temperature is 100.154314423
+Temperature has dropped to a nominal range [81.6455347456]
+WARN: Temp is too high [109.380800571]
+WARN: Temperature is 116.705359576
+WARN: Temperature is 95.1648658145
+Temperature has dropped to a nominal range [93.6429377187]
+WARN: Temp is too high [101.220439384]
+Temperature has dropped to a nominal range [88.3104495699]
+WARN: Temp is too high [101.694820794]
+Temperature has dropped to a nominal range [90.2091347923]
+WARN: Temp is too high [119.892167339]
+Temperature has dropped to a nominal range [81.1475059302]
+WARN: Temp is too high [107.797967725]
+WARN: Temperature is 104.460069965
+WARN: Temperature is 107.183513647
+WARN: Temperature is 98.66801686
+WARN: Temperature is 97.9584191345
+Temperature has dropped to a nominal range [92.8226831993]
+WARN: Temp is too high [104.130422733]
+WARN: Temperature is 108.910671579
+WARN: Temperature is 115.069426122
+WARN: Temperature is 97.5799022806
+WARN: Temperature is 117.852126219
+WARN: Temperature is 107.789507568
+WARN: Temperature is 106.967079542
+WARN: Temperature is 115.535330122
+WARN: Temperature is 113.453673808
+WARN: Temperature is 116.270860679
+WARN: Temperature is 114.697479708
+WARN: Temperature is 108.063377674
+ERR: Temperature was too hot for too long
