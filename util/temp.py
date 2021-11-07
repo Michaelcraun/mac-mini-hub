@@ -1,66 +1,56 @@
 import os
 import time
-from datetime import date
+from datetime import datetime
 
 # dev imports
 import random
 
-maximumCriticalEventCount = 0
-maximumTemp = 70.0
-logfileName = "temp_log.txt"
-
-criticalEventCount = 0
-isOverheating = False
-
-def initMonitorWithMaxTemp(max = 70.0, count = 3, logfile = "temp_log.txt"):
-    global logfileName
-    global maximumCriticalEventCount
-    global maximumTemp
-    logfileName = logfile
-    maximumCriticalEventCount = count
-    maximumTemp = max
-    newLogSet()
+class PiTemp:
+    allowedCriticalEventCount = 3
+    maximumTemp = 70.0
+    logFileName = "temp_log.txt"
     
-def newLogSet():
-    today = date.today()
-    log("\nStarting new monitor on {}".format(today))
+    criticalEventCount = 0
+    isOverheating = False
 
-def measureTemp():
-    # generate random numbers for development (vcgencmd is a Pi-specific command)
-    # temp = os.popen("vcgencmd measure_temp").readline()
-    randomTemp = random.uniform(80.0,120.0)
-    temp = 'temp={}'.format(randomTemp)
-    string = (temp.replace("temp=",""))
-    return float(string)
-    
-def log(message):
-    global logfileName
-    file = open(logfileName, "a")
-    file.write("{}\n".format(message))
-    file.close()
-    
-def startTempMonitor():
-    while True:
-        global criticalEventCount
-        global isOverheating
-        global maximumCriticalEventCount
-        global maximumTemp
+    def __init__(self, max = 70.0, count = 3, logfile = "temp_log.txt"):
+        self.logFileName = logfile
+        self.allowedCriticalEventCount = count
+        self.maximumTemp = max
+
+    def measureTemp(self):
+        # generate random numbers for development (vcgencmd is a Pi-specific command)
+        # temp = os.popen("vcgencmd measure_temp").readline()
+        randomTemp = random.uniform(80.0,120.0)
+        temp = 'temp={}'.format(randomTemp)
+        string = (temp.replace("temp=",""))
+        return float(string)
         
-        currentTemp = measureTemp()
-        if isOverheating:
-            if currentTemp < maximumTemp:
-                log("Temperature has dropped to a nominal range [{}]".format(currentTemp))
-                isOverheating = False
-                criticalEventCount = 0
+    def log(self, message):
+        now = datetime.now()
+        dtString = now.strftime('%m/%d/%Y %H:%M:%S')
+        
+        file = open(self.logFileName, "a")
+        file.write("[PiTemp - {date}] {message}\n".format(date=dtString, message=message))
+        file.close()
+        
+    def start(self):
+        while True:
+            currentTemp = self.measureTemp()
+            if self.isOverheating:
+                if currentTemp < self.maximumTemp:
+                    self.log("Temperature has dropped to a nominal range [{}]".format(currentTemp))
+                    self.isOverheating = False
+                    self.criticalEventCount = 0
+                else:
+                    self.log("WARN: Temperature is still too high [{}]".format(currentTemp))
+                    self.criticalEventCount += 1
+                    if self.criticalEventCount > self.allowedCriticalEventCount:
+                        self.log("ERR: Temperature was too hot for too long")
+                        print("[PiTemp] A critical temperature has been reached! Logs can be found in 'temp_log.txt' in your project's root directory.")
+                        return True
             else:
-                log("WARN: Temperature is {}".format(currentTemp))
-                criticalEventCount += 1
-                if criticalEventCount > maximumCriticalEventCount:
-                    log("ERR: Temperature was too hot for too long")
-                    print("[PiTemp] A critical temperature has been reached! Logs can be found in 'temp_log.txt' in your project's root directory.")
-                    return True
-        else:
-            if currentTemp > maximumTemp:
-                log("WARN: Temp is too high [{}]".format(currentTemp))
-                isOverheating = True
-        time.sleep(1)
+                if currentTemp > self.maximumTemp:
+                    self.log("WARN: Temp is too high [{}]".format(currentTemp))
+                    self.isOverheating = True
+            time.sleep(1)

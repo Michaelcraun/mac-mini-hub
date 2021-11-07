@@ -3,21 +3,64 @@ import sched
 import time
 import re
 import subprocess
+import os
 
-# Start monitoring the temperature of the RasPi's core.
-from util.temp import startTempMonitor
-from util.temp import initMonitorWithMaxTemp
-initMonitorWithMaxTemp(95.0, 10, "logs.txt")
-criticalTemp = startTempMonitor()
+from datetime import datetime
 
-# Critical event monitoring
-while True:
-    if criticalTemp:
-        # Report logs?
-        exit()
-        
-def reportCriticalEvent(temp = False):
+from util.emailer import PiMailer
+from util.temp import PiTemp
+
+class Main:
+    # constants
+    logfile = 'logs.txt'
     
+    # monitoring
+    criticalTemp = False
+    
+    # setup utilities
+    mailer = PiMailer('smtp.gmail.com', 587, 'ras.pi.craun@gmail.com', 'dymdu9-vowjIt-kejvah')
+    tempMonitor = PiTemp(80.0, 3, logfile)
+    
+    # Since this is either a brand-new run and logs have already been reviewed or the start of a new month, 
+    # we want to blow away any old log file(s) and start a fresh one
+    def cleanLogs(self):
+        if os.path.exists(self.logfile):
+            os.remove(self.logfile)
+            
+        now = datetime.now()
+        dtString = now.strftime('%m/%d/%Y %H:%M:%S')
+        
+        file = open(self.logfile, 'a')
+        file.write('Starting new logs [{}]\n'.format(dtString))
+        file.close()
+        
+    def reportCriticalEvent(self):
+        subject = 'Oh, no! Your RasPi has encountered a critical event...'
+        body = ''
+        
+        if self.criticalTemp:
+            body += 'Your RasPi has reached and maintained a critical temperature for too long!'
+            body += 'Log files from your RasPi have been attached below for your convenience.'
+            body += 'Please take some time to diagnose and fix the issue and then restart your RasPi. :)'
+            body += "\n\n"
+            
+        self.mailer.sendMail('michael.craun@gmail.com', subject, body, ['logs.txt'])
+        
+    # Start any safety monitors we want running. At the time of writing, this is just the temp monitor.
+    def startMonitors(self):
+        self.criticalTemp = self.tempMonitor.start()
+        
+        while True:
+            if self.criticalTemp:
+                self.reportCriticalEvent()
+                exit()
+    
+    def __init__(self):
+        # Fresh run, so blow away the old logs
+        self.cleanLogs()
+        
+main = Main()
+main.startMonitors()
 
 # # initialization
 # devices = []
