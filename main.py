@@ -5,8 +5,7 @@ import re
 import subprocess
 import os
 
-from datetime import datetime
-
+from util.date import Date
 from util.emailer import PiMailer
 from util.temp import PiTemp
 
@@ -27,11 +26,8 @@ class Main:
         if os.path.exists(self.logfile):
             os.remove(self.logfile)
             
-        now = datetime.now()
-        dtString = now.strftime('%m/%d/%Y %H:%M:%S')
-        
         file = open(self.logfile, 'a')
-        file.write('Starting new logs [{}]\n'.format(dtString))
+        file.write('Starting new logs [{}]\n'.format(Date().timestamp()))
         file.close()
         
     def reportCriticalEvent(self):
@@ -39,10 +35,9 @@ class Main:
         body = ''
         
         if self.criticalTemp:
-            body += 'Your RasPi has reached and maintained a critical temperature for too long!'
-            body += 'Log files from your RasPi have been attached below for your convenience.'
-            body += 'Please take some time to diagnose and fix the issue and then restart your RasPi. :)'
-            body += "\n\n"
+            body += 'Your RasPi has reached and maintained a critical temperature for too long!\n'
+            body += 'Log files from your RasPi have been attached below for your convenience.\n'
+            body += 'Please take some time to diagnose and fix the issue and then restart your RasPi. :)\n\n'
             
         self.mailer.sendMail('michael.craun@gmail.com', subject, body, ['logs.txt'])
         

@@ -1,6 +1,7 @@
 import os
 import time
-from datetime import datetime
+
+from date import Date
 
 # dev imports
 import random
@@ -27,11 +28,8 @@ class PiTemp:
         return float(string)
         
     def log(self, message):
-        now = datetime.now()
-        dtString = now.strftime('%m/%d/%Y %H:%M:%S')
-        
         file = open(self.logFileName, "a")
-        file.write("[PiTemp - {date}] {message}\n".format(date=dtString, message=message))
+        file.write("[PiTemp - {date}] {message}\n".format(date=Date().timestamp(), message=message))
         file.close()
         
     def start(self):

@@ -1,7 +1,7 @@
-Starting new logs [11/07/2021 01:01:42]
-[PiTemp - 11/07/2021 01:01:42] WARN: Temp is too high [88.5982775403]
-[PiTemp - 11/07/2021 01:01:43] WARN: Temperature is still too high [93.0105676794]
-[PiTemp - 11/07/2021 01:01:44] WARN: Temperature is still too high [99.6335476878]
-[PiTemp - 11/07/2021 01:01:45] WARN: Temperature is still too high [81.5212083011]
-[PiTemp - 11/07/2021 01:01:46] WARN: Temperature is still too high [91.8197005828]
-[PiTemp - 11/07/2021 01:01:46] ERR: Temperature was too hot for too long
+Starting new logs [07/11/2021 08:17:37.951561]
+[PiTemp - 07/11/2021 08:17:37.951865] WARN: Temp is too high [83.0062074329]
+[PiTemp - 07/11/2021 08:17:38.958380] WARN: Temperature is still too high [88.7887358558]
+[PiTemp - 07/11/2021 08:17:39.963297] WARN: Temperature is still too high [99.9413220989]
+[PiTemp - 07/11/2021 08:17:40.967160] WARN: Temperature is still too high [108.75635292]
+[PiTemp - 07/11/2021 08:17:41.974759] WARN: Temperature is still too high [119.477084923]
+[PiTemp - 07/11/2021 08:17:41.976175] ERR: Temperature was too hot for too long
